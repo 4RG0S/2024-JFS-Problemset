@@ -1,9 +1,7 @@
 # 2024-JFS-Problemset
----
 2024.11.09. ARGOS JFS CTF
 
 # How to upload
----
 1. Make a challenge
 2. test
 ```
@@ -22,7 +20,6 @@
 7. Update below categories
 
 # Directory requirements
----
 ## src/
 * challenge 원본 소스
 ##  deploy/
