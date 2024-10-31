@@ -1,0 +1,10 @@
+version: '3'
+services:
+  ctf_chall01:
+    build: .
+    ulimits:
+      nproc: 65535
+      core: 0
+    ports:
+      - "10007:9999"
+    restart: unless-stopped
