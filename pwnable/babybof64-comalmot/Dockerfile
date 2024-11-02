@@ -21,8 +21,8 @@ RUN mkdir /home/nomitigation
 
 RUN chown -R nomitigation:nomitigation /home/nomitigation
 
-COPY ./prob/flag /flag
-COPY ./prob/prob.c /home/nomitigation/prob.c
+COPY ./src/flag /flag
+COPY ./src/prob.c /home/nomitigation/prob.c
 
 RUN chown root:nomitigation /flag
 RUN chmod 440 /flag
