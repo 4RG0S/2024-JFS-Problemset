@@ -21,8 +21,8 @@ RUN mkdir /home/simple_rop
 
 RUN chown -R simple_rop:simple_rop /home/simple_rop
 
-COPY ./prob/flag /flag
-COPY ./prob/prob.c /home/simple_rop/prob.c
+COPY ./src/flag /flag
+COPY ./src/prob.c /home/simple_rop/prob.c
 
 RUN chown root:simple_rop /flag
 RUN chmod 440 /flag
