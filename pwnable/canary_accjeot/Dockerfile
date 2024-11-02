@@ -21,8 +21,8 @@ RUN mkdir /home/canary
 
 RUN chown -R canary:canary /home/canary
 
-COPY ./prob/flag /flag
-COPY ./prob/prob.c /home/canary/prob.c
+COPY ./src/flag /flag
+COPY ./src/prob.c /home/canary/prob.c
 
 RUN chown root:canary /flag
 RUN chmod 440 /flag
