@@ -1,0 +1,1 @@
+*/10 * * * * root /bin/bash -c 'rm -rf /var/www/html/uploads/* /var/www/html/cgi-bin/* /var/lib/php/sessions/*'
