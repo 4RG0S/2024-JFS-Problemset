@@ -8,10 +8,8 @@ void vuln()
 {
     char buf[50] = {'\0', };
 
-    printf("buf[50] address: %p", buf);
     printf("printf addr: %p\n", dlsym(dlopen("libc.so.6", RTLD_LAZY), "printf"));
     
-
     printf("What should I do? Enter you answer : ");
     fflush(stdout);
     
