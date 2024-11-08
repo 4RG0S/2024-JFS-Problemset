@@ -4,7 +4,7 @@ FROM ubuntu:20.04
 #RUN dpkg --add-architecture i386
 
 ENV PORT=12370
-ENV FILE_NAME='/home/canary/prob'
+ENV FILE_NAME='/home/simple_canary/prob'
 
 RUN apt-get update
 
@@ -16,21 +16,21 @@ RUN apt-get update
 
 RUN apt-get install -y socat gcc
 
-RUN useradd -d /home/canary canary -s /bin/bash
-RUN mkdir /home/canary
+RUN useradd -d /home/simple_canary simple_canary -s /bin/bash
+RUN mkdir /home/simple_canary
 
-RUN chown -R canary:canary /home/canary
+RUN chown -R simple_canary:simple_canary /home/simple_canary
 
 COPY ./src/flag /flag
-COPY ./src/prob.c /home/canary/prob.c
+COPY ./src/prob.c /home/simple_canary/prob.c
 
-RUN chown root:canary /flag
+RUN chown root:simple_canary /flag
 RUN chmod 440 /flag
 
-WORKDIR '/home/canary'
-RUN gcc -fno-stack-protector -z execstack prob.c -o prob
-RUN chmod 755 /home/canary /home/canary/prob
+WORKDIR '/home/simple_canary'
+RUN gcc -z execstack prob.c -o prob
+RUN chmod 755 /home/simple_canary /home/simple_canary/prob
 
 WORKDIR '/'
 
-CMD socat TCP-LISTEN:$PORT,reuseaddr,fork EXEC:"su canary -c $FILE_NAME,,pty,raw,echo=0,stderr"
+CMD socat TCP-LISTEN:$PORT,reuseaddr,fork EXEC:"su simple_canary -c $FILE_NAME,,pty,raw,echo=0,stderr"

@@ -4,4 +4,4 @@ services:
   nomitigation:
     build: ./
     ports:
-          - "12370:12371"
+          - "12379:12370"
