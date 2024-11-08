@@ -1,4 +1,4 @@
-# [WEB] {PokéSearch}
+# [WEB] PokéSearch
 ## Summary
 * XXE to LFI
 
