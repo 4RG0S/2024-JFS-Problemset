@@ -10,7 +10,7 @@ import Magikarp # 잉어
 app = Flask(__name__)
 app.secret_key = "잉어잉어"
 
-os.environ['FLAG_B'] = "_make_a_splash!}"
+os.environ['FLAG_B'] = "**********"
 
 def generate_own_karp():
     karp_poses = Magikarp.generate_random_karp(session["sessid"])

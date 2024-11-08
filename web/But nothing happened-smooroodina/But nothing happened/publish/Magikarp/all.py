@@ -38,7 +38,7 @@ def generate_random_karp(seed):
     karp_gender = random.randint(0, 1)
     FLAG_A = ""
     if karp_color == (255, 215, 0): # golden one!
-        FLAG_A = "JFS{karpe_diem"
+        FLAG_A = "**********"
 
     karp_bytes = {}
     for pose, karp in karp_sources.items():
