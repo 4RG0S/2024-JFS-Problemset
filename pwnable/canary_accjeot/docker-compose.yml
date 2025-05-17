@@ -1,0 +1,7 @@
+version: '2.2'
+
+services:
+  nomitigation:
+    build: ./
+    ports:
+          - "12379:12370"

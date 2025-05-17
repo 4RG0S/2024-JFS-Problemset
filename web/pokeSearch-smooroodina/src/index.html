@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>PokéSearch - Find all Pokémon info</title>
+  <link rel="stylesheet" href="resources/gh-markdown.css" />
+  <link rel="stylesheet" href="resources/pokesprite-docs.css" />
+</head>
+
+<body>
+
+  <div class="markdown-body">
+    <div class="text-section">
+      <h1 class="title"><img class="p"
+          src="https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen8/regular/deino.png"
+          alt="Favorite Pokémon"/>PokéSearch</h1>
+      <h2 class="subtitle">Pokémon Database</h2>
+      <ul class="menu search">
+        <li><a href="#" class="label">Search for:</a></li>
+        <li><input type="text" id="searchKeyword"></li>
+        <li><a href="#" class="btn" onclick="doSearch('pokesprite-main-table')">→ SEARCH! ←</a></li>
+      </ul>
+      <ul class="menu submenu search">
+        <li><a href="#" class="label">Generation:</a></li>
+        <li><select id="select-generation" onchange="getListByGeneration('pokesprite-main-table')">
+            <option value="1" selected>I</option>
+            <option value="2">II</option>
+            <option value="3">III</option>
+            <option value="4">IV</option>
+            <option value="5">V</option>
+            <option value="6">VI</option>
+            <option value="7">VII</option>
+            <option value="8">VIII</option>
+            <option value="9">IX</option>
+
+          </select></li>
+        <li><a href="#" id="select-result-count" class="label">Results Per Page:</a></li>
+        <li><select>
+            <option value="10">10</option>
+            <option value="30">30</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select></li>
+      </ul>
+      <p>See the <a href="https://github.com/msikma/pokesprite">project page on Github</a> for more information.</p>
+
+    </div>
+
+    <table id="pokesprite-main-table" class="pokesprite">
+      <thead>
+        <tr class="header">
+          <th>#</th>
+          <th>Dex</th>
+          <th>Name</th>
+          <th colspan="2">名前/ローマ字</th>
+          <th colspan="2">Sprites</th>
+          <th colspan="3">Form</th>
+          <th>Slug</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td colspan="10">
+            <div class="footnote">
+              <p>†: form is an alias of another form and doesn't have a separate image.</p>
+              <p>‡: this icon is unofficial (not directly lifted from the games; only applies to non-shiny sprites, as
+                shiny sprites are all unofficial).</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="10">
+            <div class="text-section">
+              <ul class="menu submenu menu-right">
+                <li><a href="#" class="btn" onclick="downloadExcel('pokesprite-main-table')">Download as Excel <img
+                      class="icon" src="resources/excel.png" width="18" height="18"></a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    <div class="text-section last">
+      <p>The sprite images are © Nintendo/Creatures Inc./GAME FREAK Inc.<br />
+        Everything else, and the programming code, is governed by the MIT license.</p>
+    </div>
+  </div>
+  <script>
+    function getListByGeneration(tableId) {
+      let gen_num = document.getElementById("select-generation").value;
+      fetch(`./gen${gen_num}.html`, {
+        method: 'GET',
+      })
+        .then(response => response.text())
+        .then(text => {
+          document.querySelector(`#${tableId} tbody`).innerHTML = text;
+        });
+    }
+    function doSearch(tableId) {
+      let keyword = document.getElementById('searchKeyword').value.toLowerCase();
+      document.querySelectorAll(`#${tableId} tbody tr`).forEach(row => {
+        let rowContent = row.textContent.replaceAll(" ", "").toLowerCase()
+        if(rowContent.includes(keyword)) row.className = "";
+        else row.className = "hide";
+      });
+    }
+    function downloadExcel(tableId) {
+      let xmlData = '<members>';
+      document.querySelectorAll(`#${tableId} tbody tr:not(.hide)`).forEach(row => {
+        xmlData += '<member>';
+        let len = row.cells.length;
+        let i = 0;
+        try {
+          xmlData += `<no>${row.cells[i++].textContent}</no>`;
+          if (len >= 9) {
+            xmlData += `<dex>${row.cells[i++].textContent}</dex>`;
+            xmlData += `<name>${row.cells[i++].textContent}</name>`;
+            xmlData += `<name-japanese>${row.cells[i++].textContent}</name-japanese>`;
+            xmlData += `<name-japanese-roman>${row.cells[i++].textContent}</name-japanese-roman>`;
+          }
+          xmlData += `<sprite>${row.cells[i++].firstChild.src}</sprite>`;
+          xmlData += `<sprite-shiny>${row.cells[i++].firstChild.src}</sprite-shiny>`;
+          xmlData += `<form>${row.cells[i++].textContent}</form>`;
+          if (len == 6 | len == 10) {
+            xmlData += `<sex>${row.cells[i++].textContent}</sex>`;
+
+          }
+          xmlData += `<slug>${row.cells[i].textContent}</slug>`;
+        } catch (e) {
+        }
+        xmlData += '</member>';
+      });
+      xmlData += '</members>';
+
+      const blob = new Blob([xmlData], { type: 'application/xml' });
+
+      const formData = new FormData();
+      formData.append('file', blob, 'members.xml');
+
+      fetch('./download.php', {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.blob())
+        .then(blob => {
+
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'members.xlsx';
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+          a.remove();
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    window.onload = function() {
+      getListByGeneration("pokesprite-main-table");
+    }   
+  </script>
+</body>
+
+</html>
