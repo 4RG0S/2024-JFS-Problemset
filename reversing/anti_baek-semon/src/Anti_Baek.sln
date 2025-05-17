@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Anti_Baek", "Anti_Baek.vcxproj", "{CAD3782D-14C5-410A-B278-E7AFBBCADD71}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CAD3782D-14C5-410A-B278-E7AFBBCADD71}.Debug|x64.ActiveCfg = Debug|x64
+		{CAD3782D-14C5-410A-B278-E7AFBBCADD71}.Debug|x64.Build.0 = Debug|x64
+		{CAD3782D-14C5-410A-B278-E7AFBBCADD71}.Debug|x86.ActiveCfg = Debug|Win32
+		{CAD3782D-14C5-410A-B278-E7AFBBCADD71}.Debug|x86.Build.0 = Debug|Win32
+		{CAD3782D-14C5-410A-B278-E7AFBBCADD71}.Release|x64.ActiveCfg = Release|x64
+		{CAD3782D-14C5-410A-B278-E7AFBBCADD71}.Release|x64.Build.0 = Release|x64
+		{CAD3782D-14C5-410A-B278-E7AFBBCADD71}.Release|x86.ActiveCfg = Release|Win32
+		{CAD3782D-14C5-410A-B278-E7AFBBCADD71}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {967348CE-D427-4653-B1A9-97F0D47E855C}
+	EndGlobalSection
+EndGlobal
